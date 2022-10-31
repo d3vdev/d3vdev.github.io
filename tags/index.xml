@@ -1,31 +1,31 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Tags - Tag - d3v.dev blog</title>
-        <link>http://example.org/tags/</link>
+        <link>https://blog.d3v.dev/tags/</link>
         <description>Tags - Tag - d3v.dev blog</description>
         <generator>Hugo -- gohugo.io</generator><language>ko-kr</language><managingEditor>im.d3v.dev@gmail.com (d3v.dev)</managingEditor>
-            <webMaster>im.d3v.dev@gmail.com (d3v.dev)</webMaster><lastBuildDate>Mon, 31 Oct 2022 11:17:21 &#43;0000</lastBuildDate><atom:link href="http://example.org/tags/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>im.d3v.dev@gmail.com (d3v.dev)</webMaster><lastBuildDate>Mon, 31 Oct 2022 11:17:21 &#43;0000</lastBuildDate><atom:link href="https://blog.d3v.dev/tags/" rel="self" type="application/rss+xml" /><item>
     <title>Android</title>
-    <link>http://example.org/tags/android/</link>
+    <link>https://blog.d3v.dev/tags/android/</link>
     <pubDate>Mon, 31 Oct 2022 11:17:21 &#43;0000</pubDate>
     <author>d3v.dev</author>
-    <guid>http://example.org/tags/android/</guid>
+    <guid>https://blog.d3v.dev/tags/android/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>Permission</title>
-    <link>http://example.org/tags/permission/</link>
+    <link>https://blog.d3v.dev/tags/permission/</link>
     <pubDate>Mon, 31 Oct 2022 11:17:21 &#43;0000</pubDate>
     <author>d3v.dev</author>
-    <guid>http://example.org/tags/permission/</guid>
+    <guid>https://blog.d3v.dev/tags/permission/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
     <title>Storage</title>
-    <link>http://example.org/tags/storage/</link>
+    <link>https://blog.d3v.dev/tags/storage/</link>
     <pubDate>Mon, 31 Oct 2022 11:17:21 &#43;0000</pubDate>
     <author>d3v.dev</author>
-    <guid>http://example.org/tags/storage/</guid>
+    <guid>https://blog.d3v.dev/tags/storage/</guid>
     <description><![CDATA[]]></description>
 </item>
 </channel>
