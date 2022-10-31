@@ -1,7 +1,16 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Categories - Category - d3v.dev blog</title>
-        <link>https://blog.d3v.dev/categories/</link>
+        <link>http://example.org/categories/</link>
         <description>Categories - Category - d3v.dev blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>ko-kr</language><atom:link href="https://blog.d3v.dev/categories/" rel="self" type="application/rss+xml" /></channel>
+        <generator>Hugo -- gohugo.io</generator><language>ko-kr</language><managingEditor>im.d3v.dev@gmail.com (d3v.dev)</managingEditor>
+            <webMaster>im.d3v.dev@gmail.com (d3v.dev)</webMaster><lastBuildDate>Mon, 31 Oct 2022 11:17:21 &#43;0000</lastBuildDate><atom:link href="http://example.org/categories/" rel="self" type="application/rss+xml" /><item>
+    <title>Android</title>
+    <link>http://example.org/categories/android/</link>
+    <pubDate>Mon, 31 Oct 2022 11:17:21 &#43;0000</pubDate>
+    <author>d3v.dev</author>
+    <guid>http://example.org/categories/android/</guid>
+    <description><![CDATA[]]></description>
+</item>
+</channel>
 </rss>

@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="ko-kr">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>안드로이드 스토리지 접근 - d3v.dev blog</title><meta name="Description" content="This is my cool site"><meta property="og:title" content="안드로이드 스토리지 접근" />
+<meta property="og:description" content="안드로이드에서 파일에 접근하기 위해선 권한을 주어야 한다. 초창기에는 그냥 매니페스트에 스토리지 접근 권한을 넣어주면 바로 접근이 가능했으나 어느새 부터인가 권" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://example.org/2022/10/2022-10-31-%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C-%EC%8A%A4%ED%86%A0%EB%A6%AC%EC%A7%80-%EC%A0%91%EA%B7%BC/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-10-31T11:17:21+00:00" />
+<meta property="article:modified_time" content="2022-10-31T11:17:21+00:00" /><meta property="og:site_name" content="My cool site" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="안드로이드 스토리지 접근"/>
+<meta name="twitter:description" content="안드로이드에서 파일에 접근하기 위해선 권한을 주어야 한다. 초창기에는 그냥 매니페스트에 스토리지 접근 권한을 넣어주면 바로 접근이 가능했으나 어느새 부터인가 권"/>
+<meta name="application-name" content="My cool site">
+<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://example.org/2022/10/2022-10-31-%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C-%EC%8A%A4%ED%86%A0%EB%A6%AC%EC%A7%80-%EC%A0%91%EA%B7%BC/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "안드로이드 스토리지 접근",
+        "inLanguage": "ko-kr",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/example.org\/2022\/10\/2022-10-31-%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C-%EC%8A%A4%ED%86%A0%EB%A6%AC%EC%A7%80-%EC%A0%91%EA%B7%BC\/"
+        },"genre": "posts","keywords": "Android, Storage, Permission","wordcount":  1650 ,
+        "url": "http:\/\/example.org\/2022\/10\/2022-10-31-%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C-%EC%8A%A4%ED%86%A0%EB%A6%AC%EC%A7%80-%EC%A0%91%EA%B7%BC\/","datePublished": "2022-10-31T11:17:21+00:00","dateModified": "2022-10-31T11:17:21+00:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "d3v.dev"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="d3v.dev blog">d3v.dev blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="d3v.dev blog">d3v.dev blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">안드로이드 스토리지 접근</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>d3v.dev</a></span>&nbsp;<span class="post-category">included in <a href="/categories/android/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Android</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-10-31">2022-10-31</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1650 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#lollipop">Lollipop</a></li>
+    <li><a href="#marshmallow">Marshmallow</a></li>
+    <li><a href="#안드로이드-10">안드로이드 10</a></li>
+    <li><a href="#안드로이드-11">안드로이드 11</a></li>
+    <li><a href="#정리">정리</a></li>
+    <li><a href="#최종-코드">최종 코드</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>안드로이드에서 파일에 접근하기 위해선 권한을 주어야 한다. 초창기에는 그냥 매니페스트에 스토리지 접근 권한을 넣어주면 바로 접근이 가능했으나 어느새 부터인가 권한 화인창을 띄우야 하도록 변경이 되었다. 취미로 이런저런 앱을 만들면서 했던 작업들을 남겨 보았다.</p>
+<h2 id="lollipop">Lollipop</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="c">&lt;!-- AndroidMenifest.xml --&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;manifest</span> <span class="err">...</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;uses-permission</span> <span class="na">android:name=</span><span class="s">&#34;android.permission.WRITE_EXTERNAL_STORAGE&#34;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;uses-permission</span> <span class="na">android:name=</span><span class="s">&#34;android.permission.READ_EXTERNAL_STORAGE&#34;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;application</span> <span class="err">...</span><span class="nt">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="line"><span class="cl"><span class="c1">// MainActivity.kt
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="k">override</span> <span class="k">fun</span> <span class="nf">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">:</span> <span class="n">Bundle</span><span class="p">?)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">super</span><span class="p">.</span><span class="n">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">setContentView</span><span class="p">(</span><span class="n">R</span><span class="p">.</span><span class="n">layout</span><span class="p">.</span><span class="n">activity_main</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">startActivity</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">fun</span> <span class="nf">showToast</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">File</span><span class="p">(</span><span class="s2">&#34;</span><span class="si">${getSdPath()}</span><span class="s2">/test.txt&#34;</span><span class="p">).</span><span class="n">inputStream</span><span class="p">().</span><span class="n">use</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Toast</span><span class="p">.</span><span class="n">makeText</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="k">it</span><span class="p">.</span><span class="n">readBytes</span><span class="p">()),</span> <span class="n">Toast</span><span class="p">.</span><span class="n">LENGTH_LONG</span><span class="p">).</span><span class="n">show</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">fun</span> <span class="nf">writeFile</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">File</span><span class="p">(</span><span class="s2">&#34;</span><span class="si">${getSdPath()}</span><span class="s2">/test.txt&#34;</span><span class="p">).</span><span class="n">outputStream</span><span class="p">().</span><span class="n">use</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">it</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&#34;test ver: </span><span class="si">${getAndroidVersion()}</span><span class="s2">&#34;</span><span class="p">.</span><span class="n">toByteArray</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">fun</span> <span class="nf">getSdPath</span><span class="p">()</span> <span class="p">=</span> <span class="k">if</span> <span class="p">(</span><span class="n">Environment</span><span class="p">.</span><span class="n">getExternalStorageState</span><span class="p">().</span><span class="n">equals</span><span class="p">(</span><span class="n">Environment</span><span class="p">.</span><span class="n">MEDIA_MOUNTED</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Environment</span><span class="p">.</span><span class="n">getExternalStorageDirectory</span><span class="p">().</span><span class="n">absolutePath</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Environment</span><span class="p">.</span><span class="n">MEDIA_UNMOUNTED</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">fun</span> <span class="nf">startActivity</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">writeFile</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">showToast</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><figure><a class="lightgallery" href="/android/Screenshot_20221031_174214.png" title="안드로이드 롤리팝 실행 화면" data-thumbnail="/android/Screenshot_20221031_174214.png" data-sub-html="<h2>안드로이드 롤리팝 실행 화면</h2><p>안드로이드 롤리팝 실행 화면</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="/android/Screenshot_20221031_174214.png"
+            data-srcset="/android/Screenshot_20221031_174214.png, /android/Screenshot_20221031_174214.png 1.5x, /android/Screenshot_20221031_174214.png 2x"
+            data-sizes="auto"
+            alt="/android/Screenshot_20221031_174214.png" />
+    </a><figcaption class="image-caption">안드로이드 롤리팝 실행 화면</figcaption>
+    </figure></p>
+<p>롤리팝에서는 권한만 넣어준다면 잘 동작하는 것을 볼 수 있다.</p>
+<h2 id="marshmallow">Marshmallow</h2>
+<p>버전만 업그레이드 하였는데 아래와 같이 EACCES 에러가 발생하였다</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">E/AndroidRuntime: FATAL EXCEPTION: main
+</span></span><span class="line"><span class="cl">    Process: d3v.dev.storagetest, PID: 4388
+</span></span><span class="line"><span class="cl">    java.lang.RuntimeException: Unable to start activity ComponentInfo{d3v.dev.storagetest/d3v.dev.storagetest.MainActivity}: java.io.FileNotFoundException: /storage/emulated/0/test.txt: open failed: EACCES (Permission denied)
+</span></span><span class="line"><span class="cl">        at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:2416)
+</span></span><span class="line"><span class="cl">        at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:2476)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><a href="https://developer.android.com/about/versions/marshmallow/android-6.0-changes#behavior-runtime-permissions" target="_blank" rel="noopener noreffer ">이 문서</a>에 따르면 안드로이드 M 이후부터는 런타임 권한을 이용하여 사용자의 승인을 받아야 한다고 되어있다. 아래와 같이 수정하였다</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="line"><span class="cl"><span class="c1">// MainActivity.kt
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="k">companion</span> <span class="k">object</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="k">val</span> <span class="py">requestRuntimePermission</span> <span class="p">=</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">override</span> <span class="k">fun</span> <span class="nf">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">:</span> <span class="n">Bundle</span><span class="p">?)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">super</span><span class="p">.</span><span class="n">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">setContentView</span><span class="p">(</span><span class="n">R</span><span class="p">.</span><span class="n">layout</span><span class="p">.</span><span class="n">activity_main</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">requestRuntimePermission</span><span class="p">())</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">startActivity</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">fun</span> <span class="nf">requestRuntimePermission</span><span class="p">():</span> <span class="n">Boolean</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">Build</span><span class="p">.</span><span class="n">VERSION</span><span class="p">.</span><span class="n">SDK_INT</span> <span class="o">&gt;=</span> <span class="n">Build</span><span class="p">.</span><span class="n">VERSION_CODES</span><span class="p">.</span><span class="n">M</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">checkSelfPermission</span><span class="p">(</span><span class="n">Manifest</span><span class="p">.</span><span class="n">permission</span><span class="p">.</span><span class="n">WRITE_EXTERNAL_STORAGE</span><span class="p">)</span> <span class="o">!=</span> <span class="n">PackageManager</span><span class="p">.</span><span class="n">PERMISSION_GRANTED</span>
+</span></span><span class="line"><span class="cl">            <span class="o">||</span> <span class="n">checkSelfPermission</span><span class="p">(</span><span class="n">Manifest</span><span class="p">.</span><span class="n">permission</span><span class="p">.</span><span class="n">READ_EXTERNAL_STORAGE</span><span class="p">)</span> <span class="o">!=</span> <span class="n">PackageManager</span><span class="p">.</span><span class="n">PERMISSION_GRANTED</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">requestPermissions</span><span class="p">(</span><span class="n">arrayOf</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                <span class="n">Manifest</span><span class="p">.</span><span class="n">permission</span><span class="p">.</span><span class="n">WRITE_EXTERNAL_STORAGE</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="n">Manifest</span><span class="p">.</span><span class="n">permission</span><span class="p">.</span><span class="n">READ_EXTERNAL_STORAGE</span>
+</span></span><span class="line"><span class="cl">            <span class="p">),</span> <span class="n">requestRuntimePermission</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="k">false</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="k">true</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">override</span> <span class="k">fun</span> <span class="nf">onRequestPermissionsResult</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">requestCode</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">permissions</span><span class="p">:</span> <span class="n">Array</span><span class="p">&lt;</span><span class="k">out</span> <span class="n">String</span><span class="p">&gt;,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">grantResults</span><span class="p">:</span> <span class="n">IntArray</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">when</span><span class="p">(</span><span class="n">requestCode</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">requestRuntimePermission</span> <span class="o">-&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="n">grantResults</span><span class="p">.</span><span class="n">any</span> <span class="p">{</span> <span class="k">it</span> <span class="o">!=</span> <span class="m">0</span> <span class="p">})</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">// 획득에 실패한 권한이 있으면 메세지 출력 후 종료
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="n">Toast</span><span class="p">.</span><span class="n">makeText</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s2">&#34;권한 획득 실패&#34;</span><span class="p">,</span> <span class="n">Toast</span><span class="p">.</span><span class="n">LENGTH_LONG</span><span class="p">).</span><span class="n">show</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">                <span class="n">finish</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">Toast</span><span class="p">.</span><span class="n">makeText</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s2">&#34;권한 획득 성공&#34;</span><span class="p">,</span> <span class="n">Toast</span><span class="p">.</span><span class="n">LENGTH_LONG</span><span class="p">).</span><span class="n">show</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">                <span class="n">startActivity</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span> <span class="o">-&gt;</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">super</span><span class="p">.</span><span class="n">onRequestPermissionsResult</span><span class="p">(</span><span class="n">requestCode</span><span class="p">,</span> <span class="n">permissions</span><span class="p">,</span> <span class="n">grantResults</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><figure><a class="lightgallery" href="/android/Screenshot_20221031_181532.png" title="런타임 권한 요청 화면" data-thumbnail="/android/Screenshot_20221031_181532.png" data-sub-html="<h2>런타임 권한 요청 화면</h2><p>런타임 권한 요청 화면</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="/android/Screenshot_20221031_181532.png"
+            data-srcset="/android/Screenshot_20221031_181532.png, /android/Screenshot_20221031_181532.png 1.5x, /android/Screenshot_20221031_181532.png 2x"
+            data-sizes="auto"
+            alt="/android/Screenshot_20221031_181532.png" />
+    </a><figcaption class="image-caption">런타임 권한 요청 화면</figcaption>
+    </figure></p>
+<p><figure><a class="lightgallery" href="/android/Screenshot_20221031_181548.png" title="안드로이드 마쉬맬로우 실행 화면" data-thumbnail="/android/Screenshot_20221031_181548.png" data-sub-html="<h2>안드로이드 마쉬맬로우 실행 화면</h2><p>안드로이드 마쉬맬로우 실행 화면</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="/android/Screenshot_20221031_181548.png"
+            data-srcset="/android/Screenshot_20221031_181548.png, /android/Screenshot_20221031_181548.png 1.5x, /android/Screenshot_20221031_181548.png 2x"
+            data-sizes="auto"
+            alt="/android/Screenshot_20221031_181548.png" />
+    </a><figcaption class="image-caption">안드로이드 마쉬맬로우 실행 화면</figcaption>
+    </figure></p>
+<h2 id="안드로이드-10">안드로이드 10</h2>
+<p>또 다시 에러와 만났다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">E/AndroidRuntime: FATAL EXCEPTION: main
+</span></span><span class="line"><span class="cl">    Process: d3v.dev.storagetest, PID: 5350
+</span></span><span class="line"><span class="cl">    java.lang.RuntimeException: Failure delivering result ResultInfo{who=@android:requestPermissions:, request=1, result=-1, data=Intent { act=android.content.pm.action.REQUEST_PERMISSIONS (has extras) }} to activity {d3v.dev.storagetest/d3v.dev.storagetest.MainActivity}: java.io.FileNotFoundException: /storage/emulated/0/test.txt: open failed: EACCES (Permission denied)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="c">&lt;!-- AndroidManifest.xml --&gt;</span>
+</span></span><span class="line"><span class="cl">...
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;application</span>
+</span></span><span class="line"><span class="cl"><span class="err">...</span>
+</span></span><span class="line"><span class="cl">    <span class="na">android:requestLegacyExternalStorage=</span><span class="s">&#34;true&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="err">...</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">......
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>android:requestLegacyExternalStorage=&quot;true&quot;</code> 를 추가해 주면 다시 접근이 가능해진다.</p>
+<p><figure><a class="lightgallery" href="/android/Screenshot_20221031_190000.png" title="안드로이드 10 실행 화면" data-thumbnail="/android/Screenshot_20221031_190000.png" data-sub-html="<h2>안드로이드 10 실행화면</h2><p>안드로이드 10 실행 화면</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="/android/Screenshot_20221031_190000.png"
+            data-srcset="/android/Screenshot_20221031_190000.png, /android/Screenshot_20221031_190000.png 1.5x, /android/Screenshot_20221031_190000.png 2x"
+            data-sizes="auto"
+            alt="/android/Screenshot_20221031_190000.png" />
+    </a><figcaption class="image-caption">안드로이드 10 실행화면</figcaption>
+    </figure></p>
+<h2 id="안드로이드-11">안드로이드 11</h2>
+<p>또 다시 에러가 발생하였다 안드로이드 11 부터는 저장소에 직접적으로 접근하려면 <code>MANAGE_EXTERNAL_STORAGE</code> 권한이 필요하다고 한다. <a href="https://developer.android.com/training/data-storage/manage-all-files" target="_blank" rel="noopener noreffer ">참고 자료</a></p>
+<p>따라서 아래와 같이 수정을 진행하였다</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="c">&lt;!-- AndroidMenifest.xml --&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;manifest</span> <span class="err">...</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;uses-permission</span> <span class="na">android:name=</span><span class="s">&#34;android.permission.MANAGE_EXTERNAL_STORAGE&#34;</span> <span class="na">tools:ignore=</span><span class="s">&#34;ScopedStorage&#34;</span> <span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;application</span> <span class="err">...</span><span class="nt">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="line"><span class="cl"><span class="c1">// MainActivity.kt
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="cl"><span class="k">fun</span> <span class="nf">requestRuntimePermission</span><span class="p">():</span> <span class="n">Boolean</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">Build</span><span class="p">.</span><span class="n">VERSION</span><span class="p">.</span><span class="n">SDK_INT</span> <span class="o">&gt;=</span> <span class="n">Build</span><span class="p">.</span><span class="n">VERSION_CODES</span><span class="p">.</span><span class="n">R</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(!</span><span class="n">Environment</span><span class="p">.</span><span class="n">isExternalStorageManager</span><span class="p">())</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">val</span> <span class="py">actionManageAppAllFilesAccessPermission</span> <span class="p">=</span> <span class="n">registerForActivityResult</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                <span class="n">ActivityResultContracts</span><span class="p">.</span><span class="n">StartActivityForResult</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="p">(</span><span class="n">Environment</span><span class="p">.</span><span class="n">isExternalStorageManager</span><span class="p">())</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">startActivity</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="n">actionManageAppAllFilesAccessPermission</span><span class="p">.</span><span class="n">launch</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                <span class="n">Intent</span><span class="p">(</span><span class="n">Settings</span><span class="p">.</span><span class="n">ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="k">false</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">Build</span><span class="p">.</span><span class="n">VERSION</span><span class="p">.</span><span class="n">SDK_INT</span> <span class="o">&gt;=</span> <span class="n">Build</span><span class="p">.</span><span class="n">VERSION_CODES</span><span class="p">.</span><span class="n">M</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">checkSelfPermission</span><span class="p">(</span><span class="n">Manifest</span><span class="p">.</span><span class="n">permission</span><span class="p">.</span><span class="n">WRITE_EXTERNAL_STORAGE</span><span class="p">)</span> <span class="o">!=</span> <span class="n">PackageManager</span><span class="p">.</span><span class="n">PERMISSION_GRANTED</span>
+</span></span><span class="line"><span class="cl">            <span class="o">||</span> <span class="n">checkSelfPermission</span><span class="p">(</span><span class="n">Manifest</span><span class="p">.</span><span class="n">permission</span><span class="p">.</span><span class="n">READ_EXTERNAL_STORAGE</span><span class="p">)</span> <span class="o">!=</span> <span class="n">PackageManager</span><span class="p">.</span><span class="n">PERMISSION_GRANTED</span>
+</span></span><span class="line"><span class="cl">        <span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">requestPermissions</span><span class="p">(</span><span class="n">arrayOf</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                <span class="n">Manifest</span><span class="p">.</span><span class="n">permission</span><span class="p">.</span><span class="n">WRITE_EXTERNAL_STORAGE</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="n">Manifest</span><span class="p">.</span><span class="n">permission</span><span class="p">.</span><span class="n">READ_EXTERNAL_STORAGE</span>
+</span></span><span class="line"><span class="cl">            <span class="p">),</span> <span class="n">requestRuntimePermission</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="k">false</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="k">true</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><figure><a class="lightgallery" href="/android/Screenshot_20221031_200607.png" title="안드로이드 11 권한 요청 화면" data-thumbnail="/android/Screenshot_20221031_200607.png" data-sub-html="<h2>안드로이드 11 권한 요청 화면</h2><p>안드로이드 11 권한 요청 화면</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="/android/Screenshot_20221031_200607.png"
+            data-srcset="/android/Screenshot_20221031_200607.png, /android/Screenshot_20221031_200607.png 1.5x, /android/Screenshot_20221031_200607.png 2x"
+            data-sizes="auto"
+            alt="/android/Screenshot_20221031_200607.png" />
+    </a><figcaption class="image-caption">안드로이드 11 권한 요청 화면</figcaption>
+    </figure></p>
+<p><figure><a class="lightgallery" href="/android/Screenshot_20221031_200614.png" title="안드로이드 11 실행 화면" data-thumbnail="/android/Screenshot_20221031_200614.png" data-sub-html="<h2>안드로이드 11 실행 화면</h2><p>안드로이드 11 실행 화면</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="/android/Screenshot_20221031_200614.png"
+            data-srcset="/android/Screenshot_20221031_200614.png, /android/Screenshot_20221031_200614.png 1.5x, /android/Screenshot_20221031_200614.png 2x"
+            data-sizes="auto"
+            alt="/android/Screenshot_20221031_200614.png" />
+    </a><figcaption class="image-caption">안드로이드 11 실행 화면</figcaption>
+    </figure></p>
+<p>이렇게 다시 파일 접근이 가능해 진다. 하지만 <code>MANAGE_EXTERNAL_STORAGE</code> 권한을 가진 앱을 플레이스토어에 배포하려면 구글에서는 특별한 목적(파일관리, 암호화 등)이 있는 앱인지를 심사한다고 한다. 만약 전체 스토리지에 접근하는 것이 아닌 단순히 파일에 접근하는 경우 <a href="https://developer.android.com/guide/topics/providers/document-provider" target="_blank" rel="noopener noreffer ">저장소 액세스 프레임워크</a> 혹은 <a href="https://developer.android.com/training/data-storage/shared/media" target="_blank" rel="noopener noreffer ">Media Store API</a>를 이용하면 된다고 한다. 하지만 취미로 만들면서 그냥 맘 편하게 이용하고 있기 때문에 추후에 필요하다면 이에 대해 정리해 보려고 한다.</p>
+<h2 id="정리">정리</h2>
+<p>예전 안드로이드가 처음 나왔을 때 이런저런 앱을 만들었었지만 그 후에는 안드로이드 앱 개발과는 거리가 먼 생활을 하다가 오랜만에 만들어 보고 싶은 것이 있어 찾아본 내용들을 정리해 보았다.</p>
+<h2 id="최종-코드">최종 코드</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="c">&lt;!-- AndroidMenifest.xml --&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="cp">&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;manifest</span> <span class="na">xmlns:android=</span><span class="s">&#34;http://schemas.android.com/apk/res/android&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="na">xmlns:tools=</span><span class="s">&#34;http://schemas.android.com/tools&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;uses-permission</span> <span class="na">android:name=</span><span class="s">&#34;android.permission.WRITE_EXTERNAL_STORAGE&#34;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;uses-permission</span> <span class="na">android:name=</span><span class="s">&#34;android.permission.READ_EXTERNAL_STORAGE&#34;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;uses-permission</span> <span class="na">android:name=</span><span class="s">&#34;android.permission.MANAGE_EXTERNAL_STORAGE&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="na">tools:ignore=</span><span class="s">&#34;ScopedStorage&#34;</span> <span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;application</span>
+</span></span><span class="line"><span class="cl">        <span class="na">android:allowBackup=</span><span class="s">&#34;true&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="na">android:dataExtractionRules=</span><span class="s">&#34;@xml/data_extraction_rules&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="na">android:fullBackupContent=</span><span class="s">&#34;@xml/backup_rules&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="na">android:icon=</span><span class="s">&#34;@mipmap/ic_launcher&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="na">android:label=</span><span class="s">&#34;@string/app_name&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="na">android:roundIcon=</span><span class="s">&#34;@mipmap/ic_launcher_round&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="na">android:requestLegacyExternalStorage=</span><span class="s">&#34;true&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="na">android:supportsRtl=</span><span class="s">&#34;true&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="na">android:theme=</span><span class="s">&#34;@style/Theme.StorageTest&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="na">tools:targetApi=</span><span class="s">&#34;31&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;activity</span>
+</span></span><span class="line"><span class="cl">            <span class="na">android:name=</span><span class="s">&#34;.MainActivity&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="na">android:exported=</span><span class="s">&#34;true&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&lt;intent-filter&gt;</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&lt;action</span> <span class="na">android:name=</span><span class="s">&#34;android.intent.action.MAIN&#34;</span> <span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                <span class="nt">&lt;category</span> <span class="na">android:name=</span><span class="s">&#34;android.intent.category.LAUNCHER&#34;</span> <span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&lt;/intent-filter&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="nt">&lt;meta-data</span>
+</span></span><span class="line"><span class="cl">                <span class="na">android:name=</span><span class="s">&#34;android.app.lib_name&#34;</span>
+</span></span><span class="line"><span class="cl">                <span class="na">android:value=</span><span class="s">&#34;&#34;</span> <span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&lt;/activity&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;/application&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/manifest&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="line"><span class="cl"><span class="c1">// MainActivity.kt
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">class</span> <span class="nc">MainActivity</span> <span class="p">:</span> <span class="n">AppCompatActivity</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">companion</span> <span class="k">object</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">const</span> <span class="k">val</span> <span class="py">requestRuntimePermission</span> <span class="p">=</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">override</span> <span class="k">fun</span> <span class="nf">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">:</span> <span class="n">Bundle</span><span class="p">?)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">super</span><span class="p">.</span><span class="n">onCreate</span><span class="p">(</span><span class="n">savedInstanceState</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">setContentView</span><span class="p">(</span><span class="n">R</span><span class="p">.</span><span class="n">layout</span><span class="p">.</span><span class="n">activity_main</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">requestRuntimePermission</span><span class="p">())</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">startActivity</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">fun</span> <span class="nf">requestRuntimePermission</span><span class="p">():</span> <span class="n">Boolean</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">Build</span><span class="p">.</span><span class="n">VERSION</span><span class="p">.</span><span class="n">SDK_INT</span> <span class="o">&gt;=</span> <span class="n">Build</span><span class="p">.</span><span class="n">VERSION_CODES</span><span class="p">.</span><span class="n">R</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(!</span><span class="n">Environment</span><span class="p">.</span><span class="n">isExternalStorageManager</span><span class="p">())</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">val</span> <span class="py">actionManageAppAllFilesAccessPermission</span> <span class="p">=</span> <span class="n">registerForActivityResult</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">ActivityResultContracts</span><span class="p">.</span><span class="n">StartActivityForResult</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">                <span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="p">(</span><span class="n">Environment</span><span class="p">.</span><span class="n">isExternalStorageManager</span><span class="p">())</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">startActivity</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                <span class="n">actionManageAppAllFilesAccessPermission</span><span class="p">.</span><span class="n">launch</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">Intent</span><span class="p">(</span><span class="n">Settings</span><span class="p">.</span><span class="n">ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="k">false</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">Build</span><span class="p">.</span><span class="n">VERSION</span><span class="p">.</span><span class="n">SDK_INT</span> <span class="o">&gt;=</span> <span class="n">Build</span><span class="p">.</span><span class="n">VERSION_CODES</span><span class="p">.</span><span class="n">M</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">                <span class="n">checkSelfPermission</span><span class="p">(</span><span class="n">Manifest</span><span class="p">.</span><span class="n">permission</span><span class="p">.</span><span class="n">WRITE_EXTERNAL_STORAGE</span><span class="p">)</span> <span class="o">!=</span> <span class="n">PackageManager</span><span class="p">.</span><span class="n">PERMISSION_GRANTED</span>
+</span></span><span class="line"><span class="cl">                <span class="o">||</span> <span class="n">checkSelfPermission</span><span class="p">(</span><span class="n">Manifest</span><span class="p">.</span><span class="n">permission</span><span class="p">.</span><span class="n">READ_EXTERNAL_STORAGE</span><span class="p">)</span> <span class="o">!=</span> <span class="n">PackageManager</span><span class="p">.</span><span class="n">PERMISSION_GRANTED</span>
+</span></span><span class="line"><span class="cl">            <span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">requestPermissions</span><span class="p">(</span><span class="n">arrayOf</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">Manifest</span><span class="p">.</span><span class="n">permission</span><span class="p">.</span><span class="n">WRITE_EXTERNAL_STORAGE</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">Manifest</span><span class="p">.</span><span class="n">permission</span><span class="p">.</span><span class="n">READ_EXTERNAL_STORAGE</span>
+</span></span><span class="line"><span class="cl">                <span class="p">),</span> <span class="n">requestRuntimePermission</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="k">false</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="k">true</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">override</span> <span class="k">fun</span> <span class="nf">onRequestPermissionsResult</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="n">requestCode</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">permissions</span><span class="p">:</span> <span class="n">Array</span><span class="p">&lt;</span><span class="k">out</span> <span class="n">String</span><span class="p">&gt;,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">grantResults</span><span class="p">:</span> <span class="n">IntArray</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">when</span><span class="p">(</span><span class="n">requestCode</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">requestRuntimePermission</span> <span class="o">-&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="p">(</span><span class="n">grantResults</span><span class="p">.</span><span class="n">any</span> <span class="p">{</span> <span class="k">it</span> <span class="o">!=</span> <span class="m">0</span> <span class="p">})</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="c1">// 획득에 실패한 권한이 있으면 메세지 출력 후 종료
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                    <span class="n">Toast</span><span class="p">.</span><span class="n">makeText</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s2">&#34;권한 획득 실패&#34;</span><span class="p">,</span> <span class="n">Toast</span><span class="p">.</span><span class="n">LENGTH_LONG</span><span class="p">).</span><span class="n">show</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">finish</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">Toast</span><span class="p">.</span><span class="n">makeText</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s2">&#34;권한 획득 성공&#34;</span><span class="p">,</span> <span class="n">Toast</span><span class="p">.</span><span class="n">LENGTH_LONG</span><span class="p">).</span><span class="n">show</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">startActivity</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="k">else</span> <span class="o">-&gt;</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">super</span><span class="p">.</span><span class="n">onRequestPermissionsResult</span><span class="p">(</span><span class="n">requestCode</span><span class="p">,</span> <span class="n">permissions</span><span class="p">,</span> <span class="n">grantResults</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">fun</span> <span class="nf">showToast</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">File</span><span class="p">(</span><span class="s2">&#34;</span><span class="si">${getSdPath()}</span><span class="s2">/test.txt&#34;</span><span class="p">).</span><span class="n">inputStream</span><span class="p">().</span><span class="n">use</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">Toast</span><span class="p">.</span><span class="n">makeText</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="k">it</span><span class="p">.</span><span class="n">readBytes</span><span class="p">()),</span> <span class="n">Toast</span><span class="p">.</span><span class="n">LENGTH_LONG</span><span class="p">).</span><span class="n">show</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">fun</span> <span class="nf">writeFile</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">File</span><span class="p">(</span><span class="s2">&#34;</span><span class="si">${getSdPath()}</span><span class="s2">/test.txt&#34;</span><span class="p">).</span><span class="n">outputStream</span><span class="p">().</span><span class="n">use</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">it</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&#34;test ver: </span><span class="si">${getAndroidVersion()}</span><span class="s2">&#34;</span><span class="p">.</span><span class="n">toByteArray</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">fun</span> <span class="nf">getSdPath</span><span class="p">()</span> <span class="p">=</span> <span class="k">if</span> <span class="p">(</span><span class="n">Environment</span><span class="p">.</span><span class="n">getExternalStorageState</span><span class="p">().</span><span class="n">equals</span><span class="p">(</span><span class="n">Environment</span><span class="p">.</span><span class="n">MEDIA_MOUNTED</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Environment</span><span class="p">.</span><span class="n">getExternalStorageDirectory</span><span class="p">().</span><span class="n">absolutePath</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Environment</span><span class="p">.</span><span class="n">MEDIA_UNMOUNTED</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">fun</span> <span class="nf">startActivity</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">writeFile</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="n">showToast</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">private</span> <span class="k">fun</span> <span class="nf">getAndroidVersion</span><span class="p">():</span> <span class="n">String</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">val</span> <span class="py">builder</span> <span class="p">=</span> <span class="n">StringBuilder</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="n">builder</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&#34;android : &#34;</span><span class="p">).</span><span class="n">append</span><span class="p">(</span><span class="n">Build</span><span class="p">.</span><span class="n">VERSION</span><span class="p">.</span><span class="n">RELEASE</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">val</span> <span class="py">fields</span><span class="p">:</span> <span class="n">Array</span><span class="p">&lt;</span><span class="n">Field</span><span class="p">&gt;</span> <span class="p">=</span> <span class="n">Build</span><span class="p">.</span><span class="n">VERSION_CODES</span><span class="o">::</span><span class="k">class</span><span class="p">.</span><span class="n">java</span><span class="p">.</span><span class="n">fields</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="p">(</span><span class="k">field</span> <span class="k">in</span> <span class="n">fields</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">val</span> <span class="py">fieldName</span><span class="p">:</span> <span class="n">String</span> <span class="p">=</span> <span class="k">field</span><span class="p">.</span><span class="n">name</span>
+</span></span><span class="line"><span class="cl">            <span class="k">var</span> <span class="py">fieldValue</span> <span class="p">=</span> <span class="p">-</span><span class="m">1</span>
+</span></span><span class="line"><span class="cl">            <span class="k">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">fieldValue</span> <span class="p">=</span> <span class="k">field</span><span class="p">.</span><span class="n">getInt</span><span class="p">(</span><span class="n">Any</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">e</span><span class="p">:</span> <span class="n">IllegalArgumentException</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">e</span><span class="p">.</span><span class="n">printStackTrace</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">e</span><span class="p">:</span> <span class="n">IllegalAccessException</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">e</span><span class="p">.</span><span class="n">printStackTrace</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">e</span><span class="p">:</span> <span class="n">NullPointerException</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">e</span><span class="p">.</span><span class="n">printStackTrace</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="n">fieldValue</span> <span class="o">==</span> <span class="n">Build</span><span class="p">.</span><span class="n">VERSION</span><span class="p">.</span><span class="n">SDK_INT</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">builder</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&#34; : &#34;</span><span class="p">).</span><span class="n">append</span><span class="p">(</span><span class="n">fieldName</span><span class="p">).</span><span class="n">append</span><span class="p">(</span><span class="s2">&#34; : &#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="n">builder</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&#34;sdk=&#34;</span><span class="p">).</span><span class="n">append</span><span class="p">(</span><span class="n">fieldValue</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">builder</span><span class="p">.</span><span class="n">toString</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-10-31</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/android/">Android</a>,&nbsp;<a href="/tags/storage/">Storage</a>,&nbsp;<a href="/tags/permission/">Permission</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.105.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">d3v.dev</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":60},"comment":{},"lightgallery":true,"search":{"highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
