@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ko-kr">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Hugo 설치 (with. github.io) - d3v.dev blog</title><meta name="Description" content="This is my cool site"><meta property="og:title" content="Hugo 설치 (with. github.io)" />
+<meta property="og:description" content="설치방법 윈도우의 경우 관리자권한으로 powershell 혹은 cmd에서 아래 명령어를 이용하여 설치한다 1 2 &gt; choco install hugo -confirm &gt; choco install hugo-extended -confirm 맥의 경우에는 brew를 이용하여 설치 1 $" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.d3v.dev/2022/10/2022-10-31-hugo-%EC%84%A4%EC%B9%98-with-github-io/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-10-30T09:09:25+00:00" />
+<meta property="article:modified_time" content="2022-10-30T09:09:25+00:00" /><meta property="og:site_name" content="My cool site" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Hugo 설치 (with. github.io)"/>
+<meta name="twitter:description" content="설치방법 윈도우의 경우 관리자권한으로 powershell 혹은 cmd에서 아래 명령어를 이용하여 설치한다 1 2 &gt; choco install hugo -confirm &gt; choco install hugo-extended -confirm 맥의 경우에는 brew를 이용하여 설치 1 $"/>
+<meta name="application-name" content="My cool site">
+<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.d3v.dev/2022/10/2022-10-31-hugo-%EC%84%A4%EC%B9%98-with-github-io/" /><link rel="next" href="https://blog.d3v.dev/2022/10/2022-10-31-%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C-%EC%8A%A4%ED%86%A0%EB%A6%AC%EC%A7%80-%EC%A0%91%EA%B7%BC/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Hugo 설치 (with. github.io)",
+        "inLanguage": "ko-kr",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/blog.d3v.dev\/2022\/10\/2022-10-31-hugo-%EC%84%A4%EC%B9%98-with-github-io\/"
+        },"genre": "posts","keywords": "Hugo, Blog","wordcount":  586 ,
+        "url": "https:\/\/blog.d3v.dev\/2022\/10\/2022-10-31-hugo-%EC%84%A4%EC%B9%98-with-github-io\/","datePublished": "2022-10-30T09:09:25+00:00","dateModified": "2022-10-30T09:09:25+00:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "d3v"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="d3v.dev blog"><span class="header-title-pre"><i class='icon-terminal_icon' aria-hidden='true'></i> </span>d3v blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/search"> Search </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="d3v.dev blog"><span class="header-title-pre"><i class='icon-terminal_icon' aria-hidden='true'></i> </span>d3v blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/search" title="">Search</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Hugo 설치 (with. github.io)</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>d3v</a></span>&nbsp;<span class="post-category">included in <a href="/categories/guide/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Guide</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2022-10-30">2022-10-30</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;586 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;2 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#설치방법">설치방법</a></li>
+    <li><a href="#hugo-블로그-생성---github-설정">Hugo 블로그 생성 +  github 설정</a></li>
+    <li><a href="#giscus-설정">giscus 설정</a></li>
+    <li><a href="#cms-plugin">CMS Plugin</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="설치방법">설치방법</h2>
+<p>윈도우의 경우 관리자권한으로 powershell 혹은 cmd에서 아래 명령어를 이용하여 설치한다</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="p">&gt;</span> <span class="n">choco</span> <span class="n">install</span> <span class="n">hugo</span> <span class="n">-confirm</span>
+</span></span><span class="line"><span class="cl"><span class="p">&gt;</span> <span class="n">choco</span> <span class="n">install</span> <span class="nb">hugo-extended</span> <span class="n">-confirm</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>맥의 경우에는 <a href="https://brew.sh/index_ko" target="_blank" rel="noopener noreffer ">brew</a>를 이용하여 설치</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ brew install hugo
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>리눅스의 경우는 각 배포판에 맞는 패키지 관리자를 이용하여 설치</p>
+<h2 id="hugo-블로그-생성---github-설정">Hugo 블로그 생성 +  github 설정</h2>
+<p>우선 레포를 두개 사용하는 방식으로 하였다.</p>
+<ul>
+<li>&lt;github id&gt;.github.io: 실제 웹에 노출되는 레포 (무조건 public)</li>
+<li>blog: hugo 원본 파일들을 올리는 레포 (private 도 상관없음)</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; hugo new site &lt;blog 이름&gt;
+</span></span><span class="line"><span class="cl">&gt; <span class="nb">cd</span> &lt;blog 이름&gt;
+</span></span><span class="line"><span class="cl">&gt; git init
+</span></span><span class="line"><span class="cl">&gt; git submodule &lt;테마 repo&gt; themes/&lt;테마이름&gt;
+</span></span><span class="line"><span class="cl">&gt; rm public
+</span></span><span class="line"><span class="cl">&gt; git submodule &lt;github io 레포&gt; public
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>각자 정한 테마에 맞는 config.toml 를 작성하여 준다 (이 블로그는 <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer ">Loveit</a> 테마를 사용하였다)</p>
+<p>deploy 를 편하게하기 위한 스크립트</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="line"><span class="cl"><span class="nv">$DATETIME</span> <span class="p">=</span> <span class="nb">get-date</span> <span class="n">-format</span> <span class="n">yyyyMMdd_HHmmss</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">$COMMIT_MSG</span><span class="p">=</span><span class="s2">&#34;publish $DATETIME&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">echo </span><span class="nv">$COMMIT_MSG</span>
+</span></span><span class="line"><span class="cl"><span class="n">hugo</span> <span class="n">-t</span> <span class="p">&lt;</span><span class="n">theme</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">cd </span><span class="n">public</span>
+</span></span><span class="line"><span class="cl"><span class="n">git</span> <span class="n">add</span> <span class="p">.</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">git</span> <span class="n">commit</span> <span class="n">-m</span> <span class="nv">$COMMIT_MSG</span>
+</span></span><span class="line"><span class="cl"><span class="n">git</span> <span class="n">push</span> <span class="n">origin</span> <span class="n">main</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">cd </span><span class="p">..</span>
+</span></span><span class="line"><span class="cl"><span class="n">git</span> <span class="n">add</span> <span class="p">.</span>
+</span></span><span class="line"><span class="cl"><span class="n">git</span> <span class="n">commit</span> <span class="n">-m</span> <span class="nv">$COMMIT_MSG</span>
+</span></span><span class="line"><span class="cl"><span class="n">git</span> <span class="n">push</span> <span class="n">origin</span> <span class="n">main</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="giscus-설정">giscus 설정</h2>
+<p><a href="https://giscus.app/ko" target="_blank" rel="noopener noreffer ">giscus.app</a>를 참조하여 댓글이 저장될 레포에 설정하여준다.</p>
+<p>위 페이지에서 모든 정보를 입력해주고 나오는 정보를 기반으로 loveit 테마의 설정파일에 정보를 입력하여 준다.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-toml" data-lang="toml"><span class="line"><span class="cl"><span class="p">[</span><span class="nx">params</span><span class="p">.</span><span class="nx">page</span><span class="p">.</span><span class="nx">comment</span><span class="p">.</span><span class="nx">giscus</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">enable</span> <span class="p">=</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">repo</span> <span class="p">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">repoId</span> <span class="p">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">category</span> <span class="p">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">categoryId</span> <span class="p">=</span> <span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">lang</span> <span class="p">=</span> <span class="s2">&#34;ko&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">mapping</span> <span class="p">=</span> <span class="s2">&#34;pathname&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">reactionsEnabled</span> <span class="p">=</span> <span class="s2">&#34;1&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">emitMetadata</span> <span class="p">=</span> <span class="s2">&#34;0&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">inputPosition</span> <span class="p">=</span> <span class="s2">&#34;bottom&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">lazyLoading</span> <span class="p">=</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">lightTheme</span> <span class="p">=</span> <span class="s2">&#34;light&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">darkTheme</span> <span class="p">=</span> <span class="s2">&#34;dark&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>만약 테마에서 설정파일을 지원하지 않는다면 설치한 테마의 comment.html 파일에 위 giscus페이지에서 생성해준 script 코드를 붙여넣으면 된다.</p>
+<h2 id="cms-plugin">CMS Plugin</h2>
+<p>이 글을 작성하면서 스크린샷이나 여타 다른 기능들을 편하게 사용하기 위해 사용해보는 플러그인인데 사용하기 괜찮은것 같다.</p>
+<p><a href="https://frontmatter.codes/docs/dashboard#contents-view" target="_blank" rel="noopener noreffer ">FRONT MATTER</a></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-10-30</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/hugo/">Hugo</a>,&nbsp;<a href="/tags/blog/">Blog</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+            <a href="/2022/10/2022-10-31-%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C-%EC%8A%A4%ED%86%A0%EB%A6%AC%EC%A7%80-%EC%A0%91%EA%B7%BC/" class="next" rel="next" title="안드로이드 스토리지 접근">안드로이드 스토리지 접근<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="giscus" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://giscus.app">Giscus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.105.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.11"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">d3v</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/css/lightgallery-bundle.min.css"><link rel="stylesheet" href="/style.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/thumbnail/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery@2.5.0/plugins/zoom/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":60},"comment":{"giscus":{"category":"General","categoryId":"DIC_kwDOIVtpO84CSSqm","darkTheme":"dark","emitMetadata":"0","inputPosition":"bottom","lang":"ko","lazyLoading":true,"lightTheme":"light","mapping":"pathname","reactionsEnabled":"1","repo":"d3vdev/blog-comments","repoId":"R_kgDOIVtpOw"}},"lightgallery":true};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

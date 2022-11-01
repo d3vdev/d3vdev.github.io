@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Guide - Category - d3v.dev blog</title>
+        <link>https://blog.d3v.dev/categories/guide/</link>
+        <description>Guide - Category - d3v.dev blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>ko-kr</language><managingEditor>im.d3v.dev@gmail.com (d3v)</managingEditor>
+            <webMaster>im.d3v.dev@gmail.com (d3v)</webMaster><lastBuildDate>Sun, 30 Oct 2022 09:09:25 &#43;0000</lastBuildDate><atom:link href="https://blog.d3v.dev/categories/guide/" rel="self" type="application/rss+xml" /><item>
+    <title>Hugo 설치 (with. github.io)</title>
+    <link>https://blog.d3v.dev/2022/10/2022-10-31-hugo-%EC%84%A4%EC%B9%98-with-github-io/</link>
+    <pubDate>Sun, 30 Oct 2022 09:09:25 &#43;0000</pubDate>
+    <author>d3v</author>
+    <guid>https://blog.d3v.dev/2022/10/2022-10-31-hugo-%EC%84%A4%EC%B9%98-with-github-io/</guid>
+    <description><![CDATA[설치방법 윈도우의 경우 관리자권한으로 powershell 혹은 cmd에서 아래 명령어를 이용하여 설치한다 1 2 &gt; choco install hugo -confirm &gt; choco install hugo-extended -confirm 맥의 경우에는 brew를 이용하여 설치 1 $]]></description>
+</item>
+</channel>
+</rss>

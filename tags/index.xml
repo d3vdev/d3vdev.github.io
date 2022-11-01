@@ -28,5 +28,21 @@
     <guid>https://blog.d3v.dev/tags/storage/</guid>
     <description><![CDATA[]]></description>
 </item>
+<item>
+    <title>Blog</title>
+    <link>https://blog.d3v.dev/tags/blog/</link>
+    <pubDate>Sun, 30 Oct 2022 09:09:25 &#43;0000</pubDate>
+    <author>d3v</author>
+    <guid>https://blog.d3v.dev/tags/blog/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>Hugo</title>
+    <link>https://blog.d3v.dev/tags/hugo/</link>
+    <pubDate>Sun, 30 Oct 2022 09:09:25 &#43;0000</pubDate>
+    <author>d3v</author>
+    <guid>https://blog.d3v.dev/tags/hugo/</guid>
+    <description><![CDATA[]]></description>
+</item>
 </channel>
 </rss>
