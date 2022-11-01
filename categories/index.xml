@@ -3,12 +3,12 @@
         <title>Categories - Category - d3v.dev blog</title>
         <link>https://blog.d3v.dev/categories/</link>
         <description>Categories - Category - d3v.dev blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>ko-kr</language><managingEditor>im.d3v.dev@gmail.com (d3v.dev)</managingEditor>
-            <webMaster>im.d3v.dev@gmail.com (d3v.dev)</webMaster><lastBuildDate>Mon, 31 Oct 2022 11:17:21 &#43;0000</lastBuildDate><atom:link href="https://blog.d3v.dev/categories/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>ko-kr</language><managingEditor>im.d3v.dev@gmail.com (d3v)</managingEditor>
+            <webMaster>im.d3v.dev@gmail.com (d3v)</webMaster><lastBuildDate>Mon, 31 Oct 2022 11:17:21 &#43;0000</lastBuildDate><atom:link href="https://blog.d3v.dev/categories/" rel="self" type="application/rss+xml" /><item>
     <title>Android</title>
     <link>https://blog.d3v.dev/categories/android/</link>
     <pubDate>Mon, 31 Oct 2022 11:17:21 &#43;0000</pubDate>
-    <author>d3v.dev</author>
+    <author>d3v</author>
     <guid>https://blog.d3v.dev/categories/android/</guid>
     <description><![CDATA[]]></description>
 </item>
